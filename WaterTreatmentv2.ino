@@ -270,7 +270,7 @@ void sendReadings() {
               client.sendHeader("Authorization", token);
               client.post(postURL,contentType,readingBody);
               client.endRequest();
-             int statusCode = client.responseStatusCode();
+              statusCode = client.responseStatusCode();
              if(statusCode == 401) { //problem in credentials
      //             Serial.println("\nUnauthroized, check username and password ");
              }
