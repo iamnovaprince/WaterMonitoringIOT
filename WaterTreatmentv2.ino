@@ -25,8 +25,8 @@ HttpClient client =  HttpClient(wifi, serverAddress, port);
 
 //Cloud
 
-String username = "water_iot_device_1@gaiabharat.com";
-String password = "pYiEyopLbauEvub";
+String username = "";
+String password = "";
 String signInURL = "/api/auth/sign-in";
 String postURL = "/api/tenant/639bd555c514aa2d3192fc09/water-reading";
 // String postURL = "/test";
@@ -264,23 +264,20 @@ void sendReadings() {
    int statusCode = client.responseStatusCode();
    if( statusCode == 401) { //expired token case
         loginStatus = login();
-    //     if(loginStatus) {
-    //         token = "Bearer " + jwt_token;
-    //         client.beginRequest();
-    //         client.post(postURL);
-    //         client.sendHeader("Content-Type", "application/json");
-    //         client.sendHeader("Authorization", token);
-    //         client.beginBody();
-    //         client.print(readingBody);
-    //         client.endRequest();
-    //         int statusCode = client.responseStatusCode();
-    //         if(statusCode == 401) { //problem in credentials
-    // //             Serial.println("\nUnauthroized, check username and password ");
-    //         }
-    //         if(statusCode == 200) {
-    // //             Serial.println("\n Successfully sent the readings");
-    //         }
-    //     }
+         if(loginStatus) {
+             token = "Bearer " + jwt_token;
+              client.beginRequest();
+              client.sendHeader("Authorization", token);
+              client.post(postURL,contentType,readingBody);
+              client.endRequest();
+             int statusCode = client.responseStatusCode();
+             if(statusCode == 401) { //problem in credentials
+     //             Serial.println("\nUnauthroized, check username and password ");
+             }
+             if(statusCode == 200) {
+     //             Serial.println("\n Successfully sent the readings");
+             }
+         }
    }
    Serial.print("Readings status ");
    Serial.println(statusCode);
